@@ -3,6 +3,7 @@ Solving coding exercises from "Cracking the Coding Interview", Chapter 1 - Array
 
 Author: Matthaeus Heer
 """
+from typing import List
 
 
 def exc1_is_unique_1(input_str: str) -> bool:
@@ -239,4 +240,14 @@ def exc6_string_compression(input_str: str) -> str:
         return input_str
     return compressed_string
 
+
+def exc7_rotate_matrix(input_img: List[List]) -> List[List]:
+    """Given an image represented by an NxN matrix, where each pixel in the image is 4
+    bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
+    Hints: #51, # 100
+    - Try thinking about it layer by layer. Can you rotate a specific layer?
+    - Rotating a specific layer would just mean swapping the values in four arrays. If you were
+    asked to swap the values in two arrays, could you do this? Can you then extend it to four arrays?
+    """
+    pass
 
