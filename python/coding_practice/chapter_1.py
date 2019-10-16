@@ -156,4 +156,87 @@ def exc4_palindrome_permutation(input_string: str) -> bool:
     return True
 
 
+def exc5_one_away(str1: str, str2: str) -> bool:
+    """There are three types of edits that can be performed on strings: insert a character,
+    remove a character, or replace a character. Given two strings, write a function to check if they are
+    one edit (or zero edits) away.
+    Hints: #23, #97, #130
+    - Start with the easy thing. Can you check each of the conditions separately?
+    - What is the relationship between the "insert character" option and the "remove char­acter" option?
+      Do these need to be two separate checks?
+    - Can you do all three checks in a single pass?
+    """
+    # Complexity:
+    #   Time: O(n), n = #elements in longer string
+    #   Space: O(1)
+
+    def check_replace(s1, s2):
+        """Check if one can make s1 into s2 by replacing one character. If we have to modify more than one this is
+        certainly not possible so we return False if we have more than 1 edits.
+        Else, for 0 or 1 edits, we return True."""
+        edit_found_already = False
+        for char1, char2 in zip(s1, s2):
+            if char1 != char2:
+                if edit_found_already:
+                    return False  # if we come here twice we need more than one edit
+            edit_found_already = True
+        return True
+
+    def check_insert(s1, s2):
+        """Check if we can make s1 to s2 by inserting one letter. Checking if one can make one string into another
+        by removing a letter is the same as checking whether one can inserting one letter into the second to make it
+        the first one, so inserting is the inverse of removal of one letter."""
+        idx1 = 0
+        idx2 = 0
+        while idx1 < len(s1) and idx2 < len(s2):
+            char1, char2 = s1[idx1], s2[idx2]
+            if char1 != char2:
+                if idx1 != idx2:
+                    return False
+                idx2 += 1  # we inserted a character in s2, so we advance here only to sync up to s1
+            else:
+                idx1 += 1
+                idx2 += 1
+        return True
+
+    # Lengths of the strings determine which check should be implemented.
+    if len(str2) == len(str1):
+        return check_replace(str1, str2)
+    elif len(str1) == len(str2) - 1:
+        return check_insert(str1, str2)
+    elif len(str1) == len(str2) + 1:
+        return check_insert(str2, str1)  # inverse of insertion
+    return False  # if they are not same length or one apart
+
+
+def exc6_string_compression(input_str: str) -> str:
+    """Implement a method to perform basic string compression using the counts
+    of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. If the
+    "compressed" string would not become smaller than the original string, your method should return
+    the original string. You can assume the string has only uppercase and lowercase letters (a - z).
+    Hints: #92, #110
+    - Do the easy thing first. Compress the string, then compare the lengths.
+    - Be careful that you aren't repeatedly concatenating strings together. This can be very inefficient.
+    """
+    # Kind of an ugly solution...
+    if len(input_str) == 0:
+        return input_str
+    compressed_string = ''
+    cur_char = input_str[0]
+    cur_count = 0
+    for idx, char in enumerate(input_str):
+        if char == cur_char:
+            cur_count += 1
+        elif char != cur_char:
+            compressed_string += cur_char
+            compressed_string += str(cur_count)
+            cur_char = char
+            cur_count = 1
+        if idx + 1 == len(input_str):
+            compressed_string += cur_char
+            compressed_string += str(cur_count)
+    if len(compressed_string) == 2 * len(input_str):
+        return input_str
+    return compressed_string
+
 

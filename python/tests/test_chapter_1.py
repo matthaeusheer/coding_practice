@@ -31,3 +31,23 @@ class TestChapter1(unittest.TestCase):
         for input_string, expected_result in test_cases:
             self.assertEqual(ch1.exc4_palindrome_permutation(input_string), expected_result,
                              f'Test case {input_string} failed - should be {expected_result}!')
+
+    def test_exc5_one_away(self):
+        test_cases = [('baker', 'bakers', True), ('baker', 'baakker', False),  # insert
+                      ('baker', 'baer', True),   ('baker', 'bkr', False),      # remove
+                      ('baker', 'backer', True), ('baker', 'bxkyr', False)     # replace
+                      ]
+
+        for str1, str2, expected_result in test_cases:
+            self.assertEqual(expected_result, ch1.exc5_one_away(str1, str2),
+                             f'Test case ({str1}, {str2}) failed, should be: {expected_result}')
+
+    def test_exc6_string_compression(self):
+        test_cases = [('aabcccccaaa', 'a2b1c5a3'),
+                      ('abcd', 'abcd'),
+                      ('a', 'a'),
+                      ('', ''),
+                      (' ', ' ')]
+        for test_idx, (input_str, expected_result) in enumerate(test_cases):
+            with self.subTest(test=test_idx + 1):
+                self.assertEqual(expected_result, ch1.exc6_string_compression(input_str))
