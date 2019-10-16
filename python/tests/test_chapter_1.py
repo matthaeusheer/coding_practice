@@ -20,3 +20,14 @@ class TestChapter1(unittest.TestCase):
 
     def test_exc3_urlify(self):
         self.assertEqual(ch1.exc3_urlify('Mr John Smith     ', 13), 'Mr%20John%20Smith')
+
+    def test_exc4_palindrome_permutation(self):
+        test_cases = [('Tact Coa', True),
+                      ('Anan', True),
+                      ('a', True),
+                      ('', True),
+                      ('abc', False),
+                      ('aaab', False)]
+        for input_string, expected_result in test_cases:
+            self.assertEqual(ch1.exc4_palindrome_permutation(input_string), expected_result,
+                             f'Test case {input_string} failed - should be {expected_result}!')

@@ -108,3 +108,52 @@ def exc3_urlify(string: str, true_length: int) -> str:
     string = string.strip()
     string = string.replace(' ', '%20')
     return string
+
+
+def exc4_palindrome_permutation(input_string: str) -> bool:
+    """Given a string, write a function to check if it is a permutation of a palin­
+    drome. A palindrome is a word or phrase that is the same forwards and backwards. A permutation
+    is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
+    Example:
+        Input: Tact Coa
+        Output: True: ("taco cat", "atco cta", ...)
+    Hints:
+    - You do not have to-and should not-generate all permutations. This would be very inefficient.
+    - What characteristics would a string that is a permutation of a palindrome have?
+        It would have equal number of each character except maybe one which could be not equal
+    - Have you tried a hash table? You should be able to get this down to 0( N) time.
+    - Can you reduce the space usage by using a bit vector?
+    """
+    # Idea: Hash table with counters for individual characters, fill it up, then go through it and check
+    # whether the contraints are valid.
+    # Complexity:
+    #   Time: O(n) going through whole input, then O(n) to check, hash table lookup is O(1), so 2*O(n) which is O(n)
+    #         Note: Not optimizable since every algorithm has to check every character in the input string
+    #   Space: O(1) if input size is fixes, else O(len(input_string))
+
+    # Pre-processing: Cut away whitespaces and lower since we are not case sensitive (needs to be asked!)
+    input_string = input_string.replace(' ', '').lower()
+
+    # For every char, count the number of times it appears
+    char_counter = {}
+    for char in input_string:
+        if char not in char_counter.keys():
+            char_counter[char] = 1
+        else:
+            char_counter[char] += 1
+
+    def is_even(number):
+        return number % 2 == 0
+
+    n_uneven_chars = 0
+    for count in char_counter.values():
+        if not is_even(count):
+            n_uneven_chars += 1
+        if n_uneven_chars > 1:
+            print(f'{input_string} is not a permutation of a palindrome!')
+            return False
+    print(f'{input_string} is a permutation of a palindrome!')
+    return True
+
+
+
