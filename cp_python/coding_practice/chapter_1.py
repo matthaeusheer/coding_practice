@@ -241,13 +241,60 @@ def exc6_string_compression(input_str: str) -> str:
     return compressed_string
 
 
-def exc7_rotate_matrix(input_img: List[List]) -> List[List]:
+def exc7_rotate_matrix(img: List[List]) -> List[List]:
     """Given an image represented by an NxN matrix, where each pixel in the image is 4
     bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
-    Hints: #51, # 100
-    - Try thinking about it layer by layer. Can you rotate a specific layer?
-    - Rotating a specific layer would just mean swapping the values in four arrays. If you were
-    asked to swap the values in two arrays, could you do this? Can you then extend it to four arrays?
+    Hints:
+    - #51: Try thinking about it layer by layer. Can you rotate a specific layer?
+    - #100: Rotating a specific layer would just mean swapping the values in four arrays. If you were
+            asked to swap the values in two arrays, could you do this? Can you then extend it to four arrays?
     """
-    pass
+    # Idea: Rotating means for outer layer that upper row goes right, right goes down, etc.
+    #       Then for inner-next layer the same. So essentially it's swapping arrays, for a full
+    #       layer four at a time.
+    #   [[1 2 3 4 4 1],
+    #    [6 7 8 9 3 2],
+    #    [0 1 2 3 2 3],
+    #    [4 5 6 7 1 4],
+    #    [1 2 3 4 5 5],
+    #    [1 2 3 4 5 6]]
+    #
+    # 3: 1, 4: 2, 5: 2, 6: 3, 7: 3 -> layers to swap = floor (n / 2)
+
+    # Brute force:
+    #       Since it's NxN, loop through range(N) and swap first layer, then loop through
+    #       range(N-1) and swap this layer.
+    #       Complexity:
+    #           Time: O(N) + O(N-1) + O(N-2) + ... + O(1) = O(N²) - all elements need to be touched
+    #           Space: If we have one tmp array (e.g. top, then left, ...) we need O(n) space,
+    #                   however, if we iterate through indices one by one when swapping,
+    #                   we have O(1) space.
+
+    def set_mat_row(mat, row_idx, new_row):
+        mat[row_idx] = new_row
+
+    def set_mat_col(mat, col_idx, new_col):
+        for row in mat:
+            for idx, val in enumerate(new_col):
+                row[col_idx] = val
+
+    n = len(img)
+    n_swaps = n // 2  # integer division in python3
+    for layer in range(n_swaps):
+        first = layer
+        last = n - 1 + 1 - layer
+        # top -> tmp
+        tmp_array = img[first][first:last+1]  # top row
+
+        # left -> top
+        set_mat_col(img)
+
+        # bottom -> left
+
+        # right -> bottom
+
+        # tmp -> right
+
+
+
 

@@ -51,3 +51,16 @@ class TestChapter1(unittest.TestCase):
         for test_idx, (input_str, expected_result) in enumerate(test_cases):
             with self.subTest(test=test_idx + 1):
                 self.assertEqual(expected_result, ch1.exc6_string_compression(input_str))
+
+    def test_exc7_rotate_matrix(self):
+        input_1 = [[1, 2, 3],
+                   [4, 5, 6],
+                   [7, 8, 9]]
+        expected_1 = [[7, 4, 1],
+                      [8, 5, 2],
+                      [9, 6, 3]]
+        test_cases = [(input_1, expected_1)]
+
+        for idx, (input_mat, expected_out) in enumerate(test_cases):
+            with self.subTest(test_idx=idx):
+                self.assertListEqual(expected_out, ch1.exc7_rotate_matrix(input_mat))
