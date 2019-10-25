@@ -1,5 +1,5 @@
 import unittest
-from coding_practice import chapter_1 as ch1
+from cracking_coding_interview import chapter_1 as ch1
 
 
 class TestChapter1(unittest.TestCase):
