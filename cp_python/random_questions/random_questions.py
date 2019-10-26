@@ -26,7 +26,7 @@ def add_one_to_digit_list(digits):
     return digits
 
 
-class TestQuestions(unittest.TestCase):
+class TestRandomQuestions(unittest.TestCase):
     def test_add_to_digit_list(self):
         test_cases = [([1, 2, 3, 4], [1, 2, 3, 5]),
                       ([4, 3, 9, 9], [4, 4, 0, 0]),
