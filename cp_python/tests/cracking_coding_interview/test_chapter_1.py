@@ -52,6 +52,7 @@ class TestChapter1(unittest.TestCase):
             with self.subTest(test=test_idx + 1):
                 self.assertEqual(expected_result, ch1.exc6_string_compression(input_str))
 
+    @unittest.SkipTest
     def test_exc7_rotate_matrix(self):
         input_1 = [[1, 2, 3],
                    [4, 5, 6],

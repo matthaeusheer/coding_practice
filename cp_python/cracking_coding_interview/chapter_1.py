@@ -151,9 +151,7 @@ def exc4_palindrome_permutation(input_string: str) -> bool:
         if not is_even(count):
             n_uneven_chars += 1
         if n_uneven_chars > 1:
-            print(f'{input_string} is not a permutation of a palindrome!')
             return False
-    print(f'{input_string} is a permutation of a palindrome!')
     return True
 
 
