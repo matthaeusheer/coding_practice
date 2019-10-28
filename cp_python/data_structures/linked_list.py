@@ -1,5 +1,14 @@
+from typing import List
+
+
+class Node:
+    def __init__(self, data, next_=None):
+        self.data = data
+        self.next = next_
+
+
 class LinkedList:
-    def __init__(self, head=None):
+    def __init__(self, head: Node = None):
         self.head = head
         self.size = 0
 
@@ -65,7 +74,7 @@ class LinkedList:
             idx += 1
         return -1
 
-    def to_list(self):
+    def to_list(self) -> List:
         """Convert the linked list to a usual Python list. Time: O(n)."""
         node = self.head
         if self.size == 0:
@@ -77,8 +86,17 @@ class LinkedList:
         list_.append(node.data)
         return list_
 
+    @classmethod
+    def from_list(cls, input_list: List) -> 'LinkedList':
+        """Create a linked list from a Python list."""
+        ll = LinkedList()
+        for item in reversed(input_list):
+            ll.prepend(item)
+        return ll
 
-class Node:
-    def __init__(self, data, next_=None):
-        self.data = data
-        self.next = next_
+    def traverse(self):
+        """Generator to iterate through elements of the list."""
+        node = self.head
+        for _ in range(self.size + 1):
+            yield node
+            node = node.next

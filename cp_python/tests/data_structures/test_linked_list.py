@@ -24,6 +24,11 @@ class TestLinkedListCreation(unittest.TestCase):
         self.assertEqual([1], ll.to_list()), 'LL should have exactly one element.'
         self.assertEqual(1, ll.size), 'Should be size 1.'
 
+    def test_from_list(self):
+        input_list = [1, 2, 3, 4, 5]
+        ll = LinkedList.from_list(input_list)
+        self.assertEqual([1, 2, 3, 4, 5], ll.to_list())
+
 
 class TestLinkedListOperations(unittest.TestCase):
     def setUp(self) -> None:
