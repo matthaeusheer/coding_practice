@@ -12,7 +12,7 @@ def exc1_remove_dups(ll: LinkedList) -> LinkedList:
     Since we are working with linked lists and not arrays, there is no issue with indices and
     we can do it in one pass.
     Time: O(n) since we iterate through whole linked list
-    Space: O(1)
+    Space: O(n) for the hash set lookup
     """
     lookup = set()
     if not ll.head or not ll.head.next:
@@ -30,8 +30,47 @@ def exc1_remove_dups(ll: LinkedList) -> LinkedList:
     return ll
 
 
+def exc1_remove_dups_variant(ll: LinkedList) -> LinkedList:
+    """Variant where we do not need a 'previous' pointer since we add the first element
+    of the linked list dto the lookup and check for the next node's data for matches.
+    Time: O(n)
+    Space: O(n)
+    """
+    lookup = set()
+    if not ll.head or not ll.head.next:
+        return ll
+    lookup.add(ll.head.data)
+    node = ll.head
+    while node.next:
+        if node.next.data in lookup:
+            node.next = node.next.next
+        else:
+            lookup.add(node.data)
+            node = node.next
+    return ll
+
+
 def exc1_remove_dups_no_buffer(ll: LinkedList) -> LinkedList:
-    """Same as before but now we are not allowed to use a buffer, i.e. a hash set in our case."""
-    raise NotImplementedError
+    """Same as before but now we are not allowed to use a buffer, i.e. a hash set in our case.
+    Idea:
+    Have two pointer, one which goes through the linked list one by one and another one which,
+    for every element the first pointer points to, checks the rest of the list and removes duplicates.
+    Time: O(n²)
+    Space: O(1)
+    """
+    if not ll.head or not ll.head.next:
+        return ll
+    current = ll.head
+    runner = current
+    while current:
+        while runner.next:
+            if runner.next.data == current.data:
+                runner.next = runner.next.next
+            runner = runner.next
+        current = current.next
+        runner = current
+    return ll
+
+
 
 

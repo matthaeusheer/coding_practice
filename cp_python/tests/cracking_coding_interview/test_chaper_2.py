@@ -18,6 +18,9 @@ class TestChapter2(unittest.TestCase):
                             [1],
                             [1],
                             [1]]
-        for idx, (input_list, expected_output) in enumerate(zip(input_linked_lists, expected_outputs)):
-            with self.subTest(test_idx=idx):
-                self.assertEqual(expected_output, ch2.exc1_remove_dups(input_list).to_list())
+
+        for func_to_test in [ch2.exc1_remove_dups, ch2.exc1_remove_dups_no_buffer, ch2.exc1_remove_dups_variant]:
+            for idx, (input_list, expected_output) in enumerate(zip(input_linked_lists, expected_outputs)):
+                with self.subTest(sub_test=f'Func: {func_to_test.__name__}, '
+                                           f'test_idx: {idx}'):
+                    self.assertEqual(expected_output, func_to_test(input_list).to_list())
