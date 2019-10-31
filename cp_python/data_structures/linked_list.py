@@ -100,3 +100,19 @@ class LinkedList:
         for _ in range(self.size + 1):
             yield node
             node = node.next
+
+    def split_at(self, ll: LinkedList, split_val: float) -> (LinkedList, LinkedList):
+        pass
+
+
+def ll_to_list(ll: LinkedList) -> List:
+    """TODO: Check why typing for class methods /static methods is not possible."""
+    if ll.size == 0:
+        return []
+    list_ = []
+    node = ll.head
+    while node.next:
+        list_.append(node.data)
+        node = node.next
+    list_.append(node.data)
+    return list_
