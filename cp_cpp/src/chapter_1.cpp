@@ -104,8 +104,7 @@ void exc3_urlify(std::string& str, std::size_t real_length) {
   // Step 2 - Calculate length of new string and starting index for backward loop.
   std::size_t new_length = real_length + 3 * n_spaces - n_spaces;  // Since each white space results in 3 additional characters for %20.
   std::size_t new_idx = new_length;
-  // TODO: Find solution for int runner.
-  for (int i = real_length - 1; i >= 0; i--) {
+  for (auto i = real_length; i-- != 0; ) {
     if (str[i] == ' ') {
       str[new_idx - 1] = '0';
       str[new_idx - 2] = '2';
@@ -117,3 +116,50 @@ void exc3_urlify(std::string& str, std::size_t real_length) {
     }
   }
 }
+
+/**
+ * Given a string, write a function to check if it is a permutation of
+ * a palindrome. A palindrome is a word or phrase that is the same forwards and backwards. A
+ * permutation is a rearrangement of letters. The palindrome does not need to be limited to just
+ * dictionary words.
+ * EXAMPLE
+ *  Input: Tact Coa
+ *  Output: True (permutations: "taco cat'; "atc o eta·; etc.)
+ *
+ * Idea:
+ *      What does it mean to be a palindrome? The definition is that it is a word which reads the same when reading
+ *      it forward and backwards. A permutation thereof is a word whose letters can be rearranged such that it becomes
+ *      a palindrome.
+ *      Now, to have that characteristics the string needs to have even character counts for almost all letters such
+ *      that half of the occurrences of a character can go on the left and half on the right side. One character is
+ *      being allowed to have an odd occurrence count, the one which would go in the middle.
+ *      Implementation: We go through the string and fill up a char count hash table. After that we go through
+ *      the hash table's content and make sure that at most one character has an odd occurrence count.
+ * Time:
+ *      O(n), n length of string, to go through it once and then to go through the hash map keys again
+ * Space:
+ *      O(n), need to store a key/value pair for every distinct character, in worst case they are all unique, so n
+ */
+bool exc4_palindrome_permutation(const std::string& str) {
+  std::map<char, std::size_t> counts;
+  for (const char &c : str) {
+    if (counts.find(c) != counts.end()) {
+      counts[c]++;
+    } else {
+      counts[c] = 1;
+    }
+  }
+  
+  bool found_odd_count {false};
+  for (const std::pair<char, std::size_t> pair : counts) {
+    if (pair.second % 2 != 0) {
+      if (found_odd_count) {
+        return false;
+      } else {
+        found_odd_count = true;
+      }
+    }
+  }
+  return true;
+}
+

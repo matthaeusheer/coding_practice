@@ -2,7 +2,6 @@
 
 #include "chapter_1.h"
 
-// ========== EXERCISE 1 ========== //
 
 TEST(TestExc1, TestIsUnique) {
   ASSERT_EQ(exc1_is_unique("abcde"), true);
@@ -25,5 +24,12 @@ TEST(TestExc3, Urlify) {
   std::string in_str = "Hello World!  ";
   exc3_urlify(in_str, 12);
   ASSERT_EQ(in_str, "Hello%20World!");
+}
 
+TEST(TestExc4, PalindromePermutation) {
+  std::string str;
+  str = "aannc";
+  ASSERT_TRUE(exc4_palindrome_permutation(str));
+  str = "aaannc";
+  ASSERT_FALSE(exc4_palindrome_permutation(str));
 }
