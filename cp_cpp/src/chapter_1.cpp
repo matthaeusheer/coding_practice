@@ -93,7 +93,7 @@ bool exc2_check_permutations(const std::string& first, const std::string& second
  *      Time:   O(n), n total length of string, since we iterate over the loop twice doing constant time operations only
  *      Space:  O(n) to store pairs of indices.
  */
-std::string exc3_urlify(std::string& str, std::size_t real_length) {
+void exc3_urlify(std::string& str, std::size_t real_length) {
   // Step 1 - Count white spaces within real_length bounds.
   std::size_t n_spaces {0};
   for (std::size_t i = 0; i < real_length; i++) {
@@ -104,7 +104,8 @@ std::string exc3_urlify(std::string& str, std::size_t real_length) {
   // Step 2 - Calculate length of new string and starting index for backward loop.
   std::size_t new_length = real_length + 3 * n_spaces - n_spaces;  // Since each white space results in 3 additional characters for %20.
   std::size_t new_idx = new_length;
-  for (std::size_t i = real_length - 1; i >= 0; i--) {
+  // TODO: Find solution for int runner.
+  for (int i = real_length - 1; i >= 0; i--) {
     if (str[i] == ' ') {
       str[new_idx - 1] = '0';
       str[new_idx - 2] = '2';
@@ -115,5 +116,4 @@ std::string exc3_urlify(std::string& str, std::size_t real_length) {
       new_idx--;
     }
   }
-  return str;
 }

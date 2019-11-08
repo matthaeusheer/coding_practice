@@ -23,6 +23,7 @@ TEST(TestExc2, CheckPermutations) {
 
 TEST(TestExc3, Urlify) {
   std::string in_str = "Hello World!  ";
-  ASSERT_EQ(exc3_urlify(in_str, 12), "Hello%20World!");
+  exc3_urlify(in_str, 12);
+  ASSERT_EQ(in_str, "Hello%20World!");
 
 }
