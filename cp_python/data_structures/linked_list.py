@@ -101,9 +101,6 @@ class LinkedList:
             yield node
             node = node.next
 
-    def split_at(self, ll: LinkedList, split_val: float) -> (LinkedList, LinkedList):
-        pass
-
 
 def ll_to_list(ll: LinkedList) -> List:
     """TODO: Check why typing for class methods /static methods is not possible."""
