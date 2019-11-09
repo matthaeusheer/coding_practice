@@ -1,5 +1,7 @@
 import unittest
 
+from data_structures.linked_list import LinkedList
+
 
 def add_one_to_digit_list(digits):
     """You are given a list of digits where each entry is an integer from 0 to 9.
@@ -26,13 +28,35 @@ def add_one_to_digit_list(digits):
     return digits
 
 
-class TestRandomQuestions(unittest.TestCase):
-    def test_add_to_digit_list(self):
-        test_cases = [([1, 2, 3, 4], [1, 2, 3, 5]),
-                      ([4, 3, 9, 9], [4, 4, 0, 0]),
-                      ([9, 9, 9],    [1, 0, 0, 0]),
-                      ([1],          [2])]
+def reverse_linked_list(ll: LinkedList) -> LinkedList:
+    """Reverse a linked list in place. Given is a LinkedList represented by a head node.
+    Returned should be a linked list in reversed order without buffering the results in-between."""
+    if not ll.head or not ll.head.next:
+        return ll
+    curr_node = ll.head
+    next_node = curr_node.next
+    curr_node.next = None
+    while next_node:
+        over_next = next_node.next
+        next_node.next = curr_node
+        curr_node = next_node
+        next_node = over_next
+    ll.head = curr_node
+    return ll
 
-        for test_idx, (digits, solution) in enumerate(test_cases):
-            with self.subTest(test_idx=test_idx):
-                self.assertEqual(solution, add_one_to_digit_list(digits))
+
+def reverse_linked_list_2(ll: LinkedList) -> LinkedList:
+    """Only difference to before: Here I use prev, curr, nex pointers, while before we used
+    curr, nex, over_nex pointers. Both methods work but the pointer positions are shifted by one
+    where place in the linked list. This second method is arguably nicer."""
+    if not ll.head or not ll.head.next:
+        return ll
+    prev = None
+    curr = ll.head
+    while curr:
+        nex = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nex
+    ll.head = prev
+    return ll
