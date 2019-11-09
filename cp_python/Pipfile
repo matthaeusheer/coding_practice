@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 jupyter = "*"
 pytest = "*"
+ipython = "*"
 
 [requires]
-python_version = "3.8.0"
+python_version = "3.6.9"
