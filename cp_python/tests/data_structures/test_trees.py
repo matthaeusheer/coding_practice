@@ -47,3 +47,16 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertFalse(bst.contains(11))
         self.assertFalse(bst.contains(24))
 
+    def test_bst_traversal(self):
+        bst = trees.BinarySearchTreeNode(10)
+        in_values = [15, 20, 25, 30, 5, 8, 3]
+        for value in in_values:
+            bst.insert(value)
+        self.assertListEqual(sorted(in_values + [10]), list(trees.bin_traverse_in_order(bst)))
+
+    @unittest.SkipTest
+    def test_print_value(self):
+        bst = trees.BinarySearchTreeNode(10)
+        for value in [15, 20, 25, 30, 5, 8, 3]:
+            bst.insert(value)
+        bst.print()

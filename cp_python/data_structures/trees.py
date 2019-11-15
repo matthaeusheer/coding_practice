@@ -96,8 +96,17 @@ class BinarySearchTreeNode(BinaryTreeNode):
             else:
                 return self.right.contains(lookup_data)
 
-
-
     def print(self):
         """In a binary search tree, by definition, in-order traverse will print the elements in order."""
-        pass
+        for value in bin_traverse_in_order(self):
+            print(value)
+
+
+#########################################
+#                                       #
+#   Binary Heaps.                       #
+#                                       #
+#########################################
+
+class HeapNode(BinaryTreeNode):
+    raise NotImplementedError
