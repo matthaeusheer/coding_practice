@@ -1,13 +1,14 @@
-#include <iostream>
-#include <vector>
+//#include <iostream>
+//#include <vector>
 #include <string>
-#include <limits>
-#include "chapter_1.h"
+//#include <limits>
+//#include "chapter_1.h"
 
-const std::string SEPARATOR = "= = = = = = = = = =";
+//const std::string SEPARATOR = "= = = = = = = = = =";
 
 int main() {
-
+  malloc()
+  /*
   // ----- Exc 1 "Is Unique" -----
   std::cout << SEPARATOR << std::endl;
   std::cout << "\tEXERCISE 1 - Is Unique" << std::endl;
@@ -34,4 +35,5 @@ int main() {
   // ----- Exc 4 "URLify" -----
   std::cout << SEPARATOR << std::endl;
   std::cout << "\tEXERCISE 3 - URLify" << std::endl;
+   */
 }

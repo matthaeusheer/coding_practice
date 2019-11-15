@@ -42,3 +42,7 @@ add_executable(data_structs_main
 
 target_link_libraries(data_structs_main
         data_structs_lib)
+
+# ----- Tryout Executable -----
+add_executable(tryout_main
+        tryout_main.cpp)
