@@ -24,10 +24,10 @@ class Graph:
         self.nodes += nodes
 
     def print_graph(self) -> None:
-        print(15 * ' = ')
+        print()
         for idx, node in enumerate(self.nodes):
             print(f'Node# {idx + 1:2} --- data: {node.data:2}, children: {[child.data for child in node.children]}')
-        print(15 * ' = ' + '\n')
+        print()
 
 
 def depth_first_search(src: GraphNode, dst: GraphNode):
@@ -35,6 +35,8 @@ def depth_first_search(src: GraphNode, dst: GraphNode):
     if len(src.children) == 0:
         return False
     visited = list()
+    print(f'{"Recursion depth":20}{"Recursive call":25}{"Visited nodes":40}{"Child candidates"}')
+    print(f'{"---------------":20}{"--------------":25}{"-------------":40}{"----------------"}')
     return recursive_helper_dfs(src, dst, visited)
 
 
@@ -51,9 +53,11 @@ def recursive_helper_dfs(src, dst, visited):
         return True
     visited.append(src)
     non_visited_children = [candidate for candidate in src.children if candidate not in visited]
-    print(f'{indentation:10} [src: {src.data:2} - dst: {dst.data:2}]',
-          f'visited: {str([node.data for node in visited]):40}'
-          f'candidates: {[node.data for node in non_visited_children]}')
+    params = f'[src: {src.data:2} - dst: {dst.data:2}]'
+    print(f'{indentation:20}'
+          f'{params:25}'
+          f'{str([node.data for node in visited]):40}'
+          f'{[node.data for node in non_visited_children]}')
     for child in non_visited_children:
         recursion_depth += 1
         if recursive_helper_dfs(child, dst, visited):

@@ -32,5 +32,6 @@ class TestGraphSearch(unittest.TestCase):
         my_graph.print_graph()
 
         found = depth_first_search(node1, node6)
-        print(f'Performed DFS starting from node {node1.data}, looking for node {node6.data}')
+        print()
+        print(f'Performed DFS starting from node {node1.data}, looking for node {node6.data}.')
         print(f'Search was {"successful." if found else "not successful."}')
