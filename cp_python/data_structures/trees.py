@@ -25,6 +25,23 @@ class BinaryTreeNode:
         self.left = left
         self.right = right
 
+    def depth(self) -> int:
+        """Returns the maximum depth one could recurse into the tree."""
+        left_depth = self.left.depth() if self.left else 0
+        right_depth = self.right.depth() if self.right else 0
+        return max(left_depth, right_depth) + 1
+
+
+class BinaryTree:
+    def __init__(self, root: BinaryTreeNode = None) -> None:
+        self.root = root
+
+    def depth(self) -> int:
+        if not self.root:
+            return 0
+        else:
+            return self.root.depth()
+
 
 def bin_traverse_in_order(node: BinaryTreeNode) -> Generator:
     """Traversal scheme: Traverse left, then current, then right."""
@@ -96,10 +113,26 @@ class BinarySearchTreeNode(BinaryTreeNode):
             else:
                 return self.right.contains(lookup_data)
 
+
+class BinarySearchTree(BinaryTree):
+    def __init__(self, root: BinarySearchTreeNode = None) -> None:
+        super().__init__(root)
+
+    def insert(self, node: BinarySearchTreeNode) -> None:
+        if not self.root:
+            self.root = node
+        else:
+            self.root.insert(node.data)
+
+    def contains(self, node: BinarySearchTreeNode) -> bool:
+        return self.root.contains(node) if self.root else False
+
     def print(self):
         """In a binary search tree, by definition, in-order traverse will print the elements in order."""
-        for value in bin_traverse_in_order(self):
-            print(value)
+        print('Printing tree in order. For a BST this results in printing elements in ascending order.')
+        for idx, value in enumerate(bin_traverse_in_order(self.root)):
+            print(f'{idx:>2}: {value}')
+
 
 
 #########################################
@@ -108,5 +141,13 @@ class BinarySearchTreeNode(BinaryTreeNode):
 #                                       #
 #########################################
 
+
 class HeapNode(BinaryTreeNode):
-    raise NotImplementedError
+    def __init__(self, data):
+        super().__init__(data=data)
+
+    def insert(self, item):
+        pass
+
+    def extract_min(self):
+        pass

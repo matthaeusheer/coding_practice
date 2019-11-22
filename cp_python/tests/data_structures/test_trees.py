@@ -13,9 +13,9 @@ class TestTreeTraversal(unittest.TestCase):
         child2 = trees.BinaryTreeNode(data=3)
         self.root = trees.BinaryTreeNode(data=1, left=child1, right=child2)
 
-    @unittest.SkipTest
     def test_print_traversals(self) -> None:
         """Helper function without testing functionality to see tree traversal in action."""
+        print('Testing tree print out function with various traversal options.')
         for func in [trees.bin_traverse_in_order, trees.bin_traverse_pre_order, trees.bin_traverse_post_order]:
             trees.print_bin_traversal(self.root, func)
     
@@ -27,6 +27,9 @@ class TestTreeTraversal(unittest.TestCase):
 
     def test_bin_traversal_post_order(self):
         self.assertListEqual([4, 6, 5, 2, 3, 1], list(trees.bin_traverse_post_order(self.root)))
+
+    def test_depth(self):
+        self.assertEqual(4, self.root.depth())
 
 
 class TestBinarySearchTree(unittest.TestCase):
@@ -54,8 +57,8 @@ class TestBinarySearchTree(unittest.TestCase):
             bst.insert(value)
         self.assertListEqual(sorted(in_values + [10]), list(trees.bin_traverse_in_order(bst)))
 
-    @unittest.SkipTest
     def test_print_value(self):
+        print('Traversing a binary search tree in-order should yield the elements in ascending order.')
         bst = trees.BinarySearchTreeNode(10)
         for value in [15, 20, 25, 30, 5, 8, 3]:
             bst.insert(value)
