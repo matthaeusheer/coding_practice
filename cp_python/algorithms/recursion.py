@@ -45,7 +45,7 @@ def fibonacci_iterative(n: int) -> int:
         return n
     second_last = 1
     last = 1
-    result = None
+    result = last
     for idx in range(3, n + 1):
         result = last + second_last
         second_last = last

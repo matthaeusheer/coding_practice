@@ -62,4 +62,5 @@ class TestBinarySearchTree(unittest.TestCase):
         bst = trees.BinarySearchTreeNode(10)
         for value in [15, 20, 25, 30, 5, 8, 3]:
             bst.insert(value)
+        bst = trees.BinarySearchTree(root=bst)
         bst.print()
