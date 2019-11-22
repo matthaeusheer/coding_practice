@@ -37,14 +37,16 @@ if all tests passed.
 ```
 cp_cpp/
   src/
-    Holds all source code (TODO: split into sub-packages and src/ include/ dirs if this grows larger).
-  include/
-    Solutions to interview questions from Cracking the Coding Interview (utilizes data_structures package).
+    ...source files...
+    CMakeLists.txt
+    [Holds all source code (TODO: split into sub-packages and src/ include/ dirs if this grows larger).]
   tests/
-    Unit tests using Google Test.
+    ...test source files...
+    CMakeLists.txt
+    [Unit tests using Google Test.]
 ```
 ### Installation
-Make sure to have CMake >3.5 and a decent C++ compiler installed, e.g. GNU 5.4. All dependencies (such as Google Test) are handled by the CMakeLists.txt files in place so following the standard build procedure (mkdir build; cd build; cmake ..; make) should build everything. To build the project do (inside ```cp_cpp```)
+Make sure to have CMake >3.5 and a decent C++ compiler installed, e.g. GNU 5.4. All dependencies (such as Google Test) are handled by the CMakeLists.txt files in place. To build the project do (inside ```cp_cpp```)
 ```
 mkdir build
 cd build
@@ -52,7 +54,7 @@ cmake ..
 make
 ```
 ### Running the tests
-To run the tests, go to the ```.../cp_cpp/build/test/``` and run a test executable, e.g. ```./test_chapter_1``` which should give you 
+To run the tests, go to the ```cd <PATH_TO_REPO>/cp_cpp/build/test/``` and run a test executable, e.g. ```./test_chapter_1``` which should give you 
 ```
 [==========] Running 4 tests from 4 test suites.
 [----------] Global test environment set-up.
