@@ -4,7 +4,8 @@ from typing import Callable, List
 
 
 def run_sub_tests(test_case: unittest.TestCase, func: Callable,
-                  input_values: List, solutions: List, apply_to_out: Callable = None) -> None:
+                  input_values: List, solutions: List, apply_to_out: Callable = None,
+                  sub_test_print_divide: Callable = None) -> None:
     """For a given function, run sub-tests for each input_values <-> solutions pair (zipped).
 
     Arguments
@@ -16,9 +17,11 @@ def run_sub_tests(test_case: unittest.TestCase, func: Callable,
         solutions:      Expected solutions matching the cases in input_values.
         apply_to_out:   Callable which will transform the output of the test function
                         before asserting equality with solution.
+        sub_test_print_divide: Function which prints something to divide sub tests in stdout.
     """
     for idx, (input_args, expected_solution) in enumerate(zip(input_values, solutions)):
         with test_case.subTest(test_case=f'Func: {func.__name__}, test: {idx}.'):
+            sub_test_print_divide() if sub_test_print_divide else None
             if isinstance(input_args, Iterable):
                 result = apply_to_out(func(*input_args)) if apply_to_out else func(*input_args)
             else:
