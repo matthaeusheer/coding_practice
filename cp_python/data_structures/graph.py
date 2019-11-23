@@ -1,4 +1,6 @@
+from pprint import pprint
 from queue import Queue
+
 from typing import List
 
 
@@ -36,8 +38,10 @@ def depth_first_search(src: GraphNode, dst: GraphNode) -> bool:
     if len(src.children) == 0:
         return False
     visited = list()
+    print(f'Performing Depth-First-Search: Looking for connection {src.data} <-> {dst.data}...\n')
     print(f'{"Recursion depth":20}{"Recursive call":25}{"Visited nodes":50}{"Child candidates"}')
     print(f'{"---------------":20}{"--------------":25}{"-------------":50}{"----------------"}')
+
     return recursive_helper_dfs(src, dst, visited)
 
 
@@ -46,11 +50,11 @@ recursion_depth = 1
 
 def recursive_helper_dfs(src, dst, visited) -> bool:
     global recursion_depth
-    if src in visited:
-        return False
     if src == dst:
         recursion_depth -= 1
         return True
+    if src in visited:
+        return False
     visited.append(src)
     non_visited_children = [candidate for candidate in src.children if candidate not in visited]
     # --- printing section ----
@@ -71,7 +75,7 @@ def recursive_helper_dfs(src, dst, visited) -> bool:
 
 def breadth_first_search(src: GraphNode, dst: GraphNode) -> bool:
     queue = Queue()
-    marked = set()
+    marked = {src}
     queue.put(src)
     print(f'{"Visiting node":15}{"Current queue"}')
     print(f'{"-------------":15}{"-------------"}')
@@ -85,3 +89,67 @@ def breadth_first_search(src: GraphNode, dst: GraphNode) -> bool:
                 marked.add(child)
                 queue.put(child)
     return False
+
+
+def depth_first_search_var2(graph: dict) -> None:
+    """While the depth_first_search function above uses the GraphNode class, I want to provide a version which
+    is simpler in terms of dependencies so potentially better suitable for interview questions.
+
+    This function does not check if two nodes are connected (see var3) but merely prints out all nodes in the
+    graph using depth first exploration.
+
+    Here, the (undirected) Graph is represented as a Hash Map (dict) consisting of vertices and edges.
+    Example
+    -------
+        graph = {'vertices': ['a', 'b', 'c', 'd', 'e', 'f'],
+                 'edges': {
+                    'a': ['b'],
+                    'b': ['a', 'c', 'd'],
+                    'c': ['b', 'd'],
+                    'd': ['b', 'c'],
+                    'e': ['f'],
+                    'f': ['e']
+                 }
+                 }
+    Time complexity: O(vertices + edges)
+    """
+
+    def visit(vertex: str, visited: set) -> None:
+        """Recursive helper function."""
+        if vertex not in visited:
+            visited.add(vertex)
+            print(f'{vertex:>5}')
+            for adjacent in [candidate for candidate in graph['edges'][vertex] if candidate not in visited]:
+                visit(adjacent, visited)
+
+    visited = set()
+
+    print(f'\nDoing Depth First Search simply printing out the whole graph, even for disconnected parts')
+    pprint(graph)
+    for vertex in graph['vertices']:
+        if vertex not in visited:
+            print(f'Starting disconnected part at node {vertex}')
+            visit(vertex, visited)
+
+
+def depth_first_search_var3(graph: dict, src_vertex: str, dst_vertex: str) -> bool:
+    """Same approach in terms of simpler graph data structure like dfs_var2, but now we do an
+    actual search where we check if there is a path from a source vertex to a destination vertex."""
+    def recursive_helper(src: str, dst: str, visited: set) -> bool:
+        if src == dst:
+            print(f'\tFound: {dst}')
+            return True
+        if src in visited:
+            return False
+        visited.add(src)
+        print(f'\tVisiting: {src}')
+        for neighbour in [vert for vert in graph['edges'][src] if vert not in visited]:
+            if recursive_helper(neighbour, dst, visited):
+                return True
+        return False
+
+    print(f'\nDoing depth-first-search on simpler graph model. Checking if path exists from '
+          f'{src_vertex} to {dst_vertex}...')
+    pprint(graph)
+    visited = set()
+    return recursive_helper(src_vertex, dst_vertex, visited)

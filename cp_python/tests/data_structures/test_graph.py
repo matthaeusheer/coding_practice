@@ -1,6 +1,8 @@
 import unittest
 
-from data_structures.graph import GraphNode, Graph, depth_first_search, breadth_first_search
+from data_structures.graph import GraphNode, Graph
+from data_structures.graph import depth_first_search, breadth_first_search, \
+                                  depth_first_search_var2, depth_first_search_var3
 
 
 class TestGraphSearch(unittest.TestCase):
@@ -35,20 +37,55 @@ class TestGraphSearch(unittest.TestCase):
         my_graph.add_nodes([node1, node2, node3, node4, node5, node6, node7, node8,
                             node9, node10, node11, node12, node13, node14, node15])
         self.my_graph = my_graph
-        my_graph.print_graph()
 
     def test_dfs(self):
         source = self.my_graph.nodes[0]
         destination = self.my_graph.nodes[5]
+        self.my_graph.print_graph()
         found = depth_first_search(src=source,
                                    dst=destination)
         print()
         print(f'Performed DFS starting from node {source.data}, looking for node {destination.data}.')
         print(f'Search was {"successful." if found else "not successful."}')
 
+    def test_dfs_var2(self):
+        graph = {'vertices': ['a', 'b', 'c', 'd', 'e', 'f'],
+                 'edges': {
+                    'a': ['b'],
+                    'b': ['a', 'c', 'd'],
+                    'c': ['b', 'd'],
+                    'd': ['b', 'c'],
+                    'e': ['f'],
+                    'f': ['e']
+                 }
+                 }
+        depth_first_search_var2(graph)
+
+    def test_dfs_var3(self):
+        graph = {'vertices': ['a', 'b', 'c', 'd', 'e', 'f'],
+                 'edges': {
+                     'a': ['b'],
+                     'b': ['a', 'c', 'd'],
+                     'c': ['b', 'd'],
+                     'd': ['b', 'c'],
+                     'e': ['f'],
+                     'f': ['e']
+                 }
+                 }
+        self.assertTrue(depth_first_search_var3(graph, 'a', 'b'))
+        self.assertTrue(depth_first_search_var3(graph, 'a', 'c'))
+        self.assertTrue(depth_first_search_var3(graph, 'a', 'd'))
+        self.assertTrue(depth_first_search_var3(graph, 'b', 'a'))
+        self.assertTrue(depth_first_search_var3(graph, 'c', 'd'))
+        self.assertTrue(depth_first_search_var3(graph, 'd', 'd'))
+        self.assertFalse(depth_first_search_var3(graph, 'd', 'e'))
+        self.assertFalse(depth_first_search_var3(graph, 'a', 'f'))
+        self.assertTrue(depth_first_search_var3(graph, 'e', 'f'))
+
     def test_bfs(self):
         source = self.my_graph.nodes[0]
         destination = self.my_graph.nodes[5]
+        self.my_graph.print_graph()
         found = breadth_first_search(src=source, dst=destination)
         print()
         print(f'Performed BFS starting from node {source.data}, looking for node {destination.data}.')
