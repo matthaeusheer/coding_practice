@@ -90,3 +90,23 @@ def is_palindrome(num: int) -> bool:
     pass
 
 
+def power_recursive(base: int, exp: int) -> int:
+    """Write a function that returns base^exp without the use of **-operator.
+    Without the even-exponent-optimization the runtime would be O(exp) just like the iterative approach since
+    in that case they are basically the same. Note that this recursive version uses O(exp) space as well while the
+    iterative version is O(1) space. However, with the even-exponent optimization we can actually bring down the
+    number of multiplications needed as well as the space needed."""
+    if exp == 0:
+        return 1
+    if exp % 2 == 0:
+        temp = power_recursive(base, exp // 2)
+        return temp * temp
+    return base * power_recursive(base, exp - 1)
+
+
+def power_iterative(base: int, exp: int) -> int:
+    """Iterative version. Note that we need exp multiplications, hence runtime is O(exp), while space is O(1)."""
+    result = 1
+    for _ in range(exp):
+        result *= base
+    return result

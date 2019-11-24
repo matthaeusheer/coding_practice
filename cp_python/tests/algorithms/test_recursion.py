@@ -38,3 +38,16 @@ class TestRecursionAlgorithms(unittest.TestCase):
         in_values = [100, 2002, 1, 99, 999, 22122, 212, 122]
         solutions = [False, True, True, True, True, True, True, False]
         run_sub_tests(self, is_palindrome, in_values, solutions)
+
+    def test_power(self):
+        bases = [2, 3, 4, 5]
+        exponents = [1, 2, 3, 4]
+        solutions = [[2, 4,  8,   16],
+                     [3, 9,  27,  81],
+                     [4, 16, 64,  256],
+                     [5, 25, 125, 625]]
+        for func in [power_recursive, power_iterative]:
+            for b_idx, base in enumerate(bases):
+                for e_idx, exponent in enumerate(exponents):
+                    with self.subTest(b=base, e=exponent):
+                        self.assertEqual(solutions[b_idx][e_idx], func(base, exponent))
