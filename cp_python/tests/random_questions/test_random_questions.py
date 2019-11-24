@@ -2,6 +2,7 @@ import unittest
 
 from random_questions.random_questions import add_one_to_digit_list
 from random_questions.random_questions import reverse_linked_list, reverse_linked_list_2
+from random_questions.random_questions import schnecken_dist_travelled
 from data_structures.linked_list import LinkedList
 from tests.test_utils import run_sub_tests
 
@@ -24,3 +25,9 @@ class TestRandomQuestions(unittest.TestCase):
             ll_in = LinkedList.from_list(in_list)
             with self.subTest(reverse_func=func.__name__):
                 run_sub_tests(self, func, [ll_in], [out_list], LinkedList.to_list)
+
+    def test_schnecken_dist_travelled(self):
+        target_coords = [(0, 1), (1, 1), (1, -1), (-1, -1), (-1, 2), (2, 2), (2, -2)]
+        distances = [1, 2, 4, 6, 9, 12, 16]
+        run_sub_tests(self, schnecken_dist_travelled, target_coords, distances,
+                      sub_test_print_divide=lambda: print('---'))

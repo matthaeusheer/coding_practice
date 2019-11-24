@@ -60,3 +60,35 @@ def reverse_linked_list_2(ll: LinkedList) -> LinkedList:
         curr = nex
     ll.head = prev
     return ll
+
+
+def schnecken_dist_travelled(target_x: int, target_y: int) -> int:
+    """We are on a 2D plane. Starting from (0, 0), you can do a step of 1 upwards, then 1 to the right,
+    then 2 downwards, then 2 to the left, then 3 upwards, then 3 to the right, 4 downwards and so on.
+    Given a target location (target_x, target_y), what is the distance you have travelled?
+    You may assume that the target location given is actually on the path described."""
+    current_x, current_y = 0, 0
+    dist = 0
+    level_step = 1
+    print(f'Target: {{{target_x}, {target_y}}}')
+    if target_x == 0 and target_y == 0:
+        return dist
+    while True:
+        direction = -1 if level_step % 2 == 0 else 1
+        # take vertical step
+        current_y += direction * level_step
+        dist += level_step
+        print(f'Took step of size {level_step} {"upwards" if direction == 1 else "downwards"}')
+        print(f'Total distance travelled: {dist}')
+        if current_x == target_x and current_y == target_y:
+            print('Target reached.')
+            return dist
+        # take horizontal step
+        current_x += direction * level_step
+        dist += level_step
+        print(f'Took step of size {level_step} {"right" if direction == 1 else "left"}')
+        print(f'Total distance travelled: {dist}')
+        if current_x == target_x and current_y == target_y:
+            print('Target reached.')
+            return dist
+        level_step += 1
