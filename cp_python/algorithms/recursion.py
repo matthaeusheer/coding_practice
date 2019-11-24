@@ -41,6 +41,7 @@ def fibonacci_memoization(n: int, memo: dict = None) -> int:
 
 
 def fibonacci_iterative(n: int) -> int:
+    """Basically this is a dynamic programming solution (see below)."""
     if n == 0 or n == 1:
         return n
     second_last = 1
@@ -51,6 +52,38 @@ def fibonacci_iterative(n: int) -> int:
         second_last = last
         last = result
     return result
+
+
+def fibonacci_dyn_progr(n: int) -> int:
+    """Bottom-up dynamic programming approach. Rather then starting from the top problem and
+    recursing down until we reach the base cases, we start from the actual base cases and
+    use those to build up the solution gradually.
+    Time:   O(n) since we have to do at most n calls, all others are cached
+    Space:  O(n) space needed for the memo
+    """
+    if n == 0 or n == 1:
+        return n
+    memo = {0: 0, 1: 1}
+    for idx in range(2, n):
+        memo[idx] = memo[idx - 1] + memo[idx - 2]
+    return memo[n - 1] + memo[n - 2]
+
+
+def fibonacci_dyn_progr_2(n: int) -> int:
+    """In fibonacci_dyn_progr we don't actually need to store the whole memo since we only ever
+    use the last two values in it. Therefor we can reduce the space requirements from O(n) to O(1).
+    Time:   O(n) since we simply traverse through the n levels from bottom up
+    Space:  O(1) we need no more memo since the two last values are enough
+    """
+    if n == 0 or n == 1:
+        return n
+    last = 1
+    second_last = 0
+    for idx in range(2, n):
+        res = last + second_last
+        second_last = last
+        last = res
+    return last + second_last
 
 
 def is_palindrome(num: int) -> bool:

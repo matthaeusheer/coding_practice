@@ -18,6 +18,8 @@ class TestRecursionAlgorithms(unittest.TestCase):
         solutions = [0, 1, 1, 2, 3, 5, 8, 13]
         run_sub_tests(self, fibonacci, input_values, solutions)
         run_sub_tests(self, fibonacci_iterative, input_values, solutions)
+        run_sub_tests(self, fibonacci_dyn_progr, input_values, solutions)
+        run_sub_tests(self, fibonacci_dyn_progr_2, input_values, solutions)
 
     def test_fibonacci_memo(self):
         input_values = [0, 1, 2, 3, 4, 5, 6, 7]
