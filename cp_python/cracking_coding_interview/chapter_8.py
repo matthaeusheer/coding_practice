@@ -141,21 +141,21 @@ def exc2_robot_on_a_grid(grid: Grid) -> Optional[List[GridPoint]]:
     the bottom right."""
     robo_path = []  # the list of points for a path we find
 
-    def find_path(grid: Grid, point: GridPoint, path) -> bool:
-        if point == grid.get_lower_right():
+    def find_path(grid_: Grid, point: GridPoint, path) -> bool:
+        if point == grid_.get_lower_right():
             print('\tHey, I arrived at the target!')
             return True
-        if not grid.is_occupied(point.right_neighbour()):
+        if not grid_.is_occupied(point.right_neighbour()):
             print(f'Going to {point.right_neighbour()}')
             path.append(point)
-            if find_path(grid, point.right_neighbour(), path):
+            if find_path(grid_, point.right_neighbour(), path):
                 return True
-        if not grid.is_occupied(point.lower_neighbour()):
+        if not grid_.is_occupied(point.lower_neighbour()):
             print(f'Going to {point.lower_neighbour()}')
             path.append(point)
-            if find_path(grid, point.lower_neighbour(), path):
+            if find_path(grid_, point.lower_neighbour(), path):
                 return True
-        print(f'\tI am stuck at {point}')
+        print(f'\tI am stuck at {point}, going back to last branching.')
         return False
 
     if find_path(grid, GridPoint(0, 0), robo_path):

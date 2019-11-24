@@ -41,7 +41,6 @@ class TestExc8TripleStep(unittest.TestCase):
 
         print(grid)
         path = exc2_robot_on_a_grid(grid)
-
         if path:
             print(f'\nI found this path...')
             for point in path:
