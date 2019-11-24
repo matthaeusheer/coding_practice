@@ -1,5 +1,8 @@
+import copy
+from typing import List, Optional
 
-possible_paths = 0
+
+global_possible_paths = 0
 
 
 def exc1_triple_step(stair_size: int) -> int:
@@ -17,14 +20,14 @@ def exc1_triple_step(stair_size: int) -> int:
         Space:  O(logn) since this is the max height of the recursion stack
     """
     # Reset global variable if function is being called multiple times (e.g. multiple tests)
-    global possible_paths
-    possible_paths = 0
+    global global_possible_paths
+    global_possible_paths = 0
 
     def helper(hop_size, steps, total_steps):
-        global possible_paths
+        global global_possible_paths
         steps += hop_size
         if steps == total_steps:
-            possible_paths += 1
+            global_possible_paths += 1
             return
         elif steps > total_steps:
             return
@@ -34,7 +37,7 @@ def exc1_triple_step(stair_size: int) -> int:
     for step_size in [1, 2, 3]:
         helper(step_size, 0, stair_size)
 
-    return possible_paths
+    return global_possible_paths
 
 
 def exc1_triple_step_no_global(stair_size: int) -> int:
@@ -83,5 +86,79 @@ def exc1_triple_step_top_down_memo(stair_size: int) -> int:
     return count_ways(stair_size, {})
 
 
-def exc2_robot_on_a_grid():
-    pass
+class GridPoint:
+    def __init__(self, row, col):
+        self.row, self.col = row, col
+
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
+
+    def __repr__(self):
+        return f'GridPoint: (row: {self.row}, col: {self.col})'
+
+    def right_neighbour(self):
+        return GridPoint(row=self.row, col=self.col + 1)
+
+    def lower_neighbour(self):
+        return GridPoint(row=self.row + 1, col=self.col)
+
+
+class Grid:
+    def __init__(self, rows, cols) -> None:
+        self.grid = [cols * [True] for _ in range(rows)]
+        self.rows = rows
+        self.cols = cols
+
+    def __repr__(self):
+        rep = f'Grid: ({len(self.grid)} rows, {len(self.grid[0])} cols)\n'
+        for row in self.grid:
+            row_str = ''
+            for entry in row:
+                row_str += f'{"o" if entry else "x":>5}'
+            rep += (row_str + '\n')
+        return rep
+
+    def occupy_cell(self, row: int, col: int) -> None:
+        self.grid[row][col] = False
+
+    def is_occupied(self, point: GridPoint) -> bool:
+        if point.row >= self.rows or point.col >= self.cols:
+            return True
+        return not self.grid[point.row][point.col]
+
+    def get_lower_right(self) -> GridPoint:
+        return GridPoint(row=self.rows - 1, col=self.cols - 1)
+
+    @staticmethod
+    def get_upper_left() -> GridPoint:
+        return GridPoint(0, 0)
+
+
+def exc2_robot_on_a_grid(grid: Grid) -> Optional[List[GridPoint]]:
+    """Imagine a robot sitting on the upper left corner of grid with r rows and c columns.
+    The robot can only move in two directions, right and down, but certain cells are "off limits" such that
+    the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to
+    the bottom right."""
+    robo_path = []  # the list of points for a path we find
+
+    def find_path(grid: Grid, point: GridPoint, path) -> bool:
+        if point == grid.get_lower_right():
+            print('\tHey, I arrived at the target!')
+            return True
+        if not grid.is_occupied(point.right_neighbour()):
+            print(f'Going to {point.right_neighbour()}')
+            path.append(point)
+            if find_path(grid, point.right_neighbour(), path):
+                return True
+        if not grid.is_occupied(point.lower_neighbour()):
+            print(f'Going to {point.lower_neighbour()}')
+            path.append(point)
+            if find_path(grid, point.lower_neighbour(), path):
+                return True
+        print(f'\tI am stuck at {point}')
+        return False
+
+    if find_path(grid, GridPoint(0, 0), robo_path):
+        return robo_path
+    else:
+        return None
