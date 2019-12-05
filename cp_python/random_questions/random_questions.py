@@ -92,3 +92,53 @@ def schnecken_dist_travelled(target_x: int, target_y: int) -> int:
             print('Target reached.')
             return dist
         level_step += 1
+
+
+def longest_range(arr: list) -> list:
+    """Given an array if integer, find the longest range of consecutive numbers in this array.
+    Example: arr = [0, 5, 2, 7, 3, -1, 1] -> longest range = [-1, 3]
+    Idea
+    ----
+        1)  We could sort the array and then go through it and check for consecutive ranges easily.
+            However, sorting takes O(nlogn), n being len(arr), while space would be O(1)
+        2)  We can store the whole arr in marked - hash table, initialized with False for every entry.
+            Then we would go through the array and take each position as a starting point to explore ranges
+            in both directions if this starting point has not been marked yet. We keep track of our longest
+            range and lookups happen in the hash table only in O(1). Since we lookup every number only once
+            we have O(n) time while space increases to O(n).
+    """
+    lookup = {entry: False for entry in arr}
+    largest_range = 0
+    largest_low = None
+    largest_high = None
+    for number in arr:
+        if not lookup[number]:  # valid starting point
+            lookup[number] = True
+            curr_low = number
+            curr_high = number
+            curr_len = 1
+            down_num = number
+            while True:
+                down_num -= 1
+                if down_num in lookup and not lookup[down_num]:
+                    curr_low = down_num
+                    curr_len += 1
+                    lookup[down_num] = True
+                else:
+                    break
+            up_num = number
+            while True:
+                up_num += 1
+                if up_num in lookup and not lookup[up_num]:
+                    curr_high = up_num
+                    curr_len += 1
+                    lookup[up_num] = True
+                else:
+                    break
+            if curr_len > largest_range:
+                largest_low = curr_low
+                largest_high = curr_high
+                largest_range = curr_len
+    return [largest_low, largest_high]
+
+

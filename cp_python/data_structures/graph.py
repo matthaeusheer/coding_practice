@@ -41,36 +41,33 @@ def depth_first_search(src: GraphNode, dst: GraphNode) -> bool:
     print(f'Performing Depth-First-Search: Looking for connection {src.data} <-> {dst.data}...\n')
     print(f'{"Recursion depth":20}{"Recursive call":25}{"Visited nodes":50}{"Child candidates"}')
     print(f'{"---------------":20}{"--------------":25}{"-------------":50}{"----------------"}')
+    recursion_depth = 1
 
-    return recursive_helper_dfs(src, dst, visited)
-
-
-recursion_depth = 1
-
-
-def recursive_helper_dfs(src, dst, visited) -> bool:
-    global recursion_depth
-    if src == dst:
-        recursion_depth -= 1
-        return True
-    if src in visited:
-        return False
-    visited.append(src)
-    non_visited_children = [candidate for candidate in src.children if candidate not in visited]
-    # --- printing section ----
-    indentation = recursion_depth * "-"
-    params = f'[src: {src.data:2} - dst: {dst.data:2}]'
-    print(f'{indentation:20}'
-          f'{params:25}'
-          f'{str([node.data for node in visited]):50}'
-          f'{[node.data for node in non_visited_children]}')
-    # --- printing section ----
-    for child in non_visited_children:
-        recursion_depth += 1
-        if recursive_helper_dfs(child, dst, visited):
+    def recursive_helper_dfs(src, dst) -> bool:
+        nonlocal recursion_depth
+        if src == dst:
+            recursion_depth -= 1
             return True
-    recursion_depth -= 1
-    return False
+        if src in visited:
+            return False
+        visited.append(src)
+        non_visited_children = [candidate for candidate in src.children if candidate not in visited]
+        # --- printing section ----
+        indentation = recursion_depth * "-"
+        params = f'[src: {src.data:2} - dst: {dst.data:2}]'
+        print(f'{indentation:20}'
+              f'{params:25}'
+              f'{str([node.data for node in visited]):50}'
+              f'{[node.data for node in non_visited_children]}')
+        # --- printing section ----
+        for child in non_visited_children:
+            recursion_depth += 1
+            if recursive_helper_dfs(child, dst):
+                return True
+        recursion_depth -= 1
+        return False
+
+    return recursive_helper_dfs(src, dst)
 
 
 def breadth_first_search(src: GraphNode, dst: GraphNode) -> bool:
@@ -83,7 +80,7 @@ def breadth_first_search(src: GraphNode, dst: GraphNode) -> bool:
         node = queue.get()
         if node == dst:
             return True
-        print(f'{node.data:<15}{str([node.data for node in list(queue.queue)])}')
+        print(f'{node.data:<15}{str([node.data for node in list(queue.queue)[::-1]])}')
         for child in node.children:
             if child not in marked:
                 marked.add(child)
@@ -113,23 +110,22 @@ def depth_first_search_var2(graph: dict) -> None:
                  }
     Time complexity: O(vertices + edges)
     """
+    visited = set()
 
-    def visit(vertex: str, visited: set) -> None:
+    def visit(vertex: str) -> None:
         """Recursive helper function."""
         if vertex not in visited:
             visited.add(vertex)
             print(f'{vertex:>5}')
             for adjacent in [candidate for candidate in graph['edges'][vertex] if candidate not in visited]:
-                visit(adjacent, visited)
-
-    visited = set()
+                visit(adjacent)
 
     print(f'\nDoing Depth First Search simply printing out the whole graph, even for disconnected parts')
     pprint(graph)
     for vertex in graph['vertices']:
         if vertex not in visited:
             print(f'Starting disconnected part at node {vertex}')
-            visit(vertex, visited)
+            visit(vertex)
 
 
 def depth_first_search_var3(graph: dict, src_vertex: str, dst_vertex: str) -> bool:
