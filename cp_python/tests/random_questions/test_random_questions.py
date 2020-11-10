@@ -3,7 +3,7 @@ import unittest
 from random_questions.random_questions import add_one_to_digit_list
 from random_questions.random_questions import reverse_linked_list, reverse_linked_list_2
 from random_questions.random_questions import schnecken_dist_travelled
-from random_questions.random_questions import longest_range
+from random_questions.random_questions import longest_range, longest_range_with_sorting
 from data_structures.linked_list import LinkedList
 from tests.test_utils import run_sub_tests
 
@@ -41,4 +41,5 @@ class TestRandomQuestions(unittest.TestCase):
         for test_idx, (in_arr, solution) in enumerate(test_cases):
             with self.subTest(test_idx=test_idx):
                 self.assertEqual(solution, longest_range(in_arr))
+                self.assertEqual(solution, longest_range_with_sorting(in_arr))
 

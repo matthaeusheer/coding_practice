@@ -1,5 +1,3 @@
-import unittest
-
 from data_structures.linked_list import LinkedList
 
 
@@ -100,7 +98,7 @@ def longest_range(arr: list) -> list:
     Idea
     ----
         1)  We could sort the array and then go through it and check for consecutive ranges easily.
-            However, sorting takes O(nlogn), n being len(arr), while space would be O(1)
+            However, sorting takes O(nlogn), n being len(arr), while space would be O(1) - see trivial below
         2)  We can store the whole arr in marked - hash table, initialized with False for every entry.
             Then we would go through the array and take each position as a starting point to explore ranges
             in both directions if this starting point has not been marked yet. We keep track of our longest
@@ -142,3 +140,34 @@ def longest_range(arr: list) -> list:
     return [largest_low, largest_high]
 
 
+def longest_range_with_sorting(arr: list) -> list:
+    """For problem description see longest_range."""
+    if len(arr) == 0:
+        return [None, None]
+
+    arr = sorted(arr)
+    largest_length = 1
+    low, high = arr[0], arr[0]
+
+    jumped = False
+    current_length = 1
+    current_low = low
+    current_high = high
+    for idx in range(len(arr) - 1):
+        if jumped:
+            current_length = 1
+            current_low = arr[idx]
+            current_high = arr[idx]
+            jumped = False
+        if arr[idx + 1] == arr[idx] + 1:
+            current_length += 1
+            current_high = arr[idx + 1]
+        else:
+            jumped = True
+        if jumped or idx + 1 == (len(arr) - 1):
+            if current_length > largest_length:
+                low = current_low
+                high = current_high
+                largest_length = current_length
+
+    return [low, high]
