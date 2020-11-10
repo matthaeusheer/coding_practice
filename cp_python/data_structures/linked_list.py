@@ -10,7 +10,7 @@ class Node:
 class LinkedList:
     def __init__(self, head: Node = None):
         self.head = head
-        self.size = 0
+        self.size = 0 if head is None else 1
 
     def prepend(self, data) -> None:
         """Inserts an element at the beginning. Time: O(1)."""

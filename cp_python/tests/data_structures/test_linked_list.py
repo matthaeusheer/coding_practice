@@ -1,6 +1,5 @@
 import unittest
-from functools import partial
-from data_structures.linked_list import LinkedList
+from data_structures.linked_list import LinkedList, Node
 
 
 class TestLinkedListCreation(unittest.TestCase):
@@ -79,3 +78,7 @@ class TestLinkedListOperations(unittest.TestCase):
     def test_search_empty(self):
         ll = LinkedList()
         self.assertEqual(-1, ll.search(1))
+
+    def test_empty_list(self):
+        ll = LinkedList(Node(data=1))
+        assert ll.size == 1
