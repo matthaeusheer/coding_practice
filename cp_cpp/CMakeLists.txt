@@ -37,4 +37,4 @@ endif()
 add_subdirectory(src)
 
 # ----- Add subdirectory for unit tests -----
-add_subdirectory(test)
+#add_subdirectory(test)

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "chapter_1.h"
+#include "src/crack_coding_interview/chapter_1.h"
 
 
 TEST(TestExc1, TestIsUnique) {

@@ -1,7 +1,3 @@
-//
-// Created by matt on 07.11.19.
-//
-
 #include <iostream>
 #include <unordered_set>  // Hash Set - O(1) insert & access
 #include <map>            // Hash Map - O(1) insert & access
